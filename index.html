@@ -1,23 +1,711 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "현대 벨로스터 자동차 유지비 분석",
+      "description": "현대 벨로스터 모델별 유지비 분석 서비스. 2026년 최신 기준으로 보험료, 세금, 수리비, 연비 등 종합적인 유지비용을 비교하여 제공합니다. 벨로스터 N과 터보 모델의 장단점 비교를 통해 합리적인 선택을 돕습니다.",
+      "brand": {
+        "@type": "Brand",
+        "name": "현대자동차"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "KRW",
+        "price": "문의요망",
+        "url": "https://example.com/veloster-maintenance-cost-comparison"
+      }
+    }
+    </script>
+
+    <!-- Schema.org FAQPage JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "벨로스터 N 모델의 유지비가 일반 모델보다 비싼 이유가 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "벨로스터 N은 고성능 모델 특성상 일반 모델에 비해 부품 가격이 높고, 엔진 오일 교환 주기나 타이어 교체 비용 등 소모품 비용이 더 많이 발생합니다. 특히, 2026년 기준으로 고성능 차량에 대한 보험료 할증도 더 엄격해져 보험료 견적 또한 높게 산정될 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "벨로스터 자동차세는 연간 얼마 정도 예상해야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "벨로스터 자동차세는 배기량(CC)을 기준으로 계산됩니다. 예를 들어 벨로스터 1.6 터보 모델(1,591cc)의 경우 연간 약 29만원대(지방교육세 포함)가 예상됩니다. 정확한 금액은 연식에 따라 달라지므로, 매년 6월과 12월에 부과되는 금액을 확인해야 합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "벨로스터 유지비를 절약할 수 있는 방법이 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "네, 여러 가지 방법이 있습니다. 첫째, 자동차 보험을 가입할 때 보험료 비교 사이트나 앱을 통해 여러 보험사의 견적을 확인하고 할인 혜택(주행거리 할인, 안전장치 할인 등)을 최대한 적용받는 것이 중요합니다. 둘째, 연비 효율을 높이는 운전 습관(급가속/급제동 피하기)을 들이고, 사설 정비소를 이용해 수리비를 절감할 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "벨로스터 보험료를 저렴하게 가입하려면 어떻게 해야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "보험료를 절감하려면 주행거리 할인 특약(마일리지 할인)을 반드시 확인해야 합니다. 또한, 블랙박스나 첨단 안전장치 장착 여부에 따른 할인 혜택을 제공하는 보험사가 많습니다. 신규 가입 시 여러 보험사를 비교하여 나에게 맞는 가장 저렴한 곳을 선택하는 것이 핵심입니다. 2026년에는 TMAP 안전운전 점수나 AI 기반 할인도 가능해졌습니다."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- 스타일: 부드럽고 다채로운 색, 타이틀 강조, 계층 구조 -->
+    <style>
+        :root {
+            --primary-color: #004d40; /* 다크 그린 */
+            --secondary-color: #81c784; /* 미디엄 그린 */
+            --accent-color: #a5d6a7; /* 라이트 그린 */
+            --text-color: #333333;
+            --bg-light: #f9fdf9;
+            --bg-white: #ffffff;
+            --btn-color: #ffb74d; /* 엠버 */
+            --btn-hover: #ffa726;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --border-color: #e0e0e0;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--bg-white);
+        }
+
+        header p {
+            font-size: 1.1em;
+            color: var(--accent-color);
+            margin-top: 5px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            color: var(--primary-color);
+            text-align: center;
+            padding: 60px 20px;
+            box-shadow: 0 4px 10px var(--shadow-light);
+        }
+
+        .hero h2 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .cta-btn {
+            background-color: var(--btn-color);
+            color: var(--text-color);
+            padding: 15px 35px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-btn:hover {
+            background-color: var(--btn-hover);
+            transform: translateY(-2px);
+        }
+
+        main {
+            padding: 40px 0;
+        }
+
+        .content-section {
+            background-color: var(--bg-white);
+            padding: 50px 20px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px var(--shadow-light);
+        }
+
+        .content-section h2 {
+            font-size: 2.2em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 10px;
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .content-section h3 {
+            font-size: 1.8em;
+            color: var(--text-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .content-section p, .content-section ul, .content-section ol {
+            font-size: 1.05em;
+            color: #555;
+        }
+
+        .content-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .content-section li {
+            position: relative;
+            margin-bottom: 10px;
+            padding-left: 25px;
+        }
+
+        .content-section li::before {
+            content: '✓';
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .feature-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 20px;
+        }
+
+        .feature-grid .item {
+            flex: 1 1 calc(33.33% - 20px);
+            background-color: var(--highlight-color); /* No highlight color defined, using accent-color */
+            background-color: var(--bg-light);
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-grid .item img {
+            width: 80px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .keyword-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 10px;
+        }
+
+        .keyword-list li {
+            background-color: var(--secondary-color);
+            color: var(--bg-white);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.95em;
+            font-weight: 500;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        .keyword-list li:hover {
+            background-color: var(--primary-color);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+        }
+
+        .faq-item h3 {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.4em;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .faq-item h3::after {
+            content: '+';
+            font-size: 1.5em;
+            color: var(--secondary-color);
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active h3::after {
+            content: '-';
+            transform: rotate(180deg);
+        }
+
+        .faq-item p {
+            display: none;
+            padding-top: 10px;
+            color: #555;
+            font-size: 1.1em;
+        }
+
+        .faq-item.active p {
+            display: block;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 1.05em;
+        }
+
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background-color: var(--primary-color);
+            color: var(--bg-white);
+            font-weight: 500;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: var(--bg-light);
+        }
+
+        .graph-container {
+            width: 100%;
+            height: 300px;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin: 20px 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 20px;
+            position: relative;
+        }
+
+        .graph-bar {
+            width: 15%;
+            background-color: var(--secondary-color);
+            position: relative;
+            animation: barRise 1s ease-out forwards;
+        }
+
+        .graph-bar span {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9em;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        @keyframes barRise {
+            from { height: 0; }
+        }
+
+        .calc-form {
+            background-color: var(--bg-light);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px var(--shadow-light);
+        }
+
+        .calc-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .calc-form input[type="text"], .calc-form input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .calc-result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--bg-white);
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.9em;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 2.2em; }
+            .hero p { font-size: 1.1em; }
+            .content-section h2 { font-size: 1.8em; }
+            .feature-grid .item { flex: 1 1 100%; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <h1>벨로스터 유지비 종합 분석</h1>
+            <p>2026년 최신 데이터 기반, 합리적인 벨로스터 유지비용 가이드</p>
+        </div>
+    </header>
+
     <main>
-      <h1>Home page</h1>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h2>벨로스터 유지비, 왜 미리 계산해야 할까요?</h2>
+                <p>자동차 유지비는 단순히 기름값만이 아닙니다. 보험료, 세금, 수리비 등 숨겨진 지출까지 완벽하게 파악하여 스마트한 카 라이프를 시작하세요.</p>
+                <a href="#calculator" class="cta-btn">나의 예상 유지비 계산하기</a>
+            </div>
+        </section>
+
+        <!-- Main Content Section -->
+        <section class="content-section">
+            <div class="container">
+                <h2>벨로스터 모델별 유지비 핵심 요소 분석</h2>
+                <p>현대 벨로스터는 개성 넘치는 디자인과 스포티한 주행 성능으로 인기가 높은 모델입니다. 특히 고성능 'N' 모델과 일반 '터보' 모델의 유지비용 차이는 상당합니다. 2026년 최신 기준으로 벨로스터를 구매하기 전 반드시 고려해야 할 유지비 핵심 요소를 심층 분석해 드립니다.</p>
+
+                <h3>1. 벨로스터 보험료: 연령 및 모델별 차이</h3>
+                <p>자동차 보험료는 벨로스터 유지비에서 가장 큰 비중을 차지하는 항목 중 하나입니다. 보험료는 운전자 나이, 운전 경력, 차량 모델(N 모델의 경우 고성능 할증 적용), 사고 이력에 따라 천차만별입니다. 특히, 벨로스터 N 모델은 고성능 차량 분류로 인해 일반 터보 모델보다 평균적으로 15%~30% 높은 보험료가 책정되는 경향이 있습니다. 20대 운전자의 경우 보험료 금액이 훨씬 높게 예상될 수 있으며, 30대 이상의 무사고 운전자라면 비교적 저렴한 곳을 찾을 수 있습니다.</p>
+                <p><strong>할인 혜택 활용하기:</strong> 2026년에는 TMAP 안전운전 점수를 활용한 할인(보험사별 10% 내외), 블랙박스 장착 할인, 주행거리 특약(마일리지 할인) 등 다양한 혜택이 있습니다. 신규 가입 시 여러 보험사를 비교하여 나에게 맞는 최저가 견적을 찾는 것이 중요합니다.</p>
+
+                <h3>2. 벨로스터 자동차세: 배기량에 따른 연간 비용</h3>
+                <p>벨로스터의 자동차세는 배기량(CC)을 기준으로 산정됩니다. 벨로스터 1.6 터보 모델(1,591cc)의 경우 연간 약 29만원대의 세금이 예상되며, 벨로스터 N 2.0 모델(1,998cc)의 경우 연간 약 51만원대로 금액이 올라갑니다. 차량 연식이 오래될수록 할인율이 적용되지만, 초기 5년 동안은 높은 금액을 납부해야 합니다.</p>
+                <p><strong>세금 비교 (2026년 기준, 지방교육세 포함):</strong></p>
+                <ul class="comparison-list">
+                    <li>벨로스터 1.6 터보 (1,591cc): 연간 약 293,000원</li>
+                    <li>벨로스터 N (1,998cc): 연간 약 519,000원</li>
+                </ul>
+
+                <h3>3. 벨로스터 연비 및 주유비: 주행 습관의 중요성</h3>
+                <p>벨로스터의 공인 연비는 1.6 터보 모델이 복합연비 12.6km/l 정도, 고성능 N 모델은 10.7km/l 정도입니다. 하지만 고성능 차량의 특성상 운전자의 주행 습관에 따라 실주행 연비 차이가 크게 납니다. 급가속이나 급제동이 잦은 운전 습관은 연비를 크게 떨어뜨립니다. 특히 벨로스터 N 모델은 고급유(프리미엄 휘발유)를 권장하기 때문에 일반유를 사용하는 터보 모델에 비해 주유비 부담이 가중될 수 있습니다. 2026년 유가 시세를 감안할 때, 연간 주행거리 15,000km 기준으로 N 모델은 일반 터보 모델 대비 연간 50만원 이상의 추가 주유비가 발생할 수 있습니다.</p>
+
+                <h3>4. 벨로스터 수리비 및 부품 가격: N 모델의 단점</h3>
+                <p>벨로스터 N 모델은 고성능 주행에 특화된 부품(브레이크 패드, 타이어, 서스펜션 등)을 사용합니다. 이로 인해 일반 벨로스터 터보 모델에 비해 부품 가격이 높게 형성되어 있습니다. '내돈내산' 후기를 살펴보면, 벨로스터 N 오너들은 타이어 교체나 브레이크 패드 교환 시 일반 차량 대비 1.5배에서 2배 가까운 수리비를 지출하는 경우가 많습니다. 또한, 튜닝이 많이 이루어지는 차량 특성상 신규 가입 시 보험사에서 정품 부품 사용 여부를 꼼꼼히 따지기도 합니다. 2026년 이후에는 AI 진단 기술을 통한 정비 비용 예측이 가능해지면서 투명한 견적이 기대됩니다.</p>
+
+                <h3>5. 벨로스터 유지비 절약 팁: 현명하게 관리하기</h3>
+                <p>벨로스터를 소유하면서 유지비를 절약하는 방법은 다양합니다. 첫째, 자동차 보험 가입 시 '할인 혜택'을 놓치지 않아야 합니다. 특히, 주행거리가 짧다면 마일리지 특약을, 안전운전을 한다면 AI 기반 할인 상품을 활용해야 합니다. 둘째, 정비소 선택입니다. 공식 서비스센터 대신 '저렴한 곳'을 찾으려면 사설 정비소를 이용하되, 부품 호환성을 꼼꼼히 확인해야 합니다. 셋째, 짐을 줄여 차의 무게를 가볍게 하고, 타이어 공기압을 적정하게 유지하는 등 일상적인 관리도 연비 향상에 도움이 됩니다. 이 팁들을 활용하면 연간 수십만원의 '지원금' 효과를 볼 수 있습니다.</p>
+
+                <!-- Model Comparison Table -->
+                <h3 style="margin-top: 50px;">벨로스터 N vs 벨로스터 터보 유지비 비교 (연간 예상치, 2026년 기준)</h3>
+                <p>운전자(만 30세, 운전 경력 5년, 무사고 기준)의 연간 유지비를 비교하여 '장단점'을 파악해봅니다. '평균'을 산정하는 기준은 보험료, 세금, 연간 주행거리 15,000km에 따른 유류비를 포함합니다. (수리비는 운전자 습관에 따라 변동이 크므로 제외)</p>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>항목</th>
+                            <th>벨로스터 1.6 터보 (기본)</th>
+                            <th>벨로스터 N (고성능)</th>
+                            <th>비고</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>자동차세 (연간)</strong></td>
+                            <td>약 293,000원</td>
+                            <td>약 519,000원</td>
+                            <td>배기량 차이 (1.6L vs 2.0L)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>평균 보험료 (연간)</strong></td>
+                            <td>약 800,000원 ~ 1,000,000원</td>
+                            <td>약 1,000,000원 ~ 1,300,000원</td>
+                            <td>고성능 할증 적용 여부</td>
+                        </tr>
+                        <tr>
+                            <td><strong>연간 주유비 (예상)</strong></td>
+                            <td>약 2,000,000원 (휘발유 기준)</td>
+                            <td>약 2,500,000원 (고급유 권장)</td>
+                            <td>연비 차이 및 유류 종류</td>
+                        </tr>
+                        <tr>
+                            <td><strong>총 예상 유지비 (연간)</strong></td>
+                            <td>약 3,000,000원 내외</td>
+                            <td>약 4,000,000원 내외</td>
+                            <td>수리비 제외한 최소 금액</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><strong>결론:</strong> 벨로스터 N 모델은 압도적인 주행 성능이라는 '장점'이 있지만, 연간 '평균' 유지비용이 일반 터보 모델보다 최소 100만원 이상 더 들어가는 '단점'이 있습니다. '내돈내산' 후기를 참고하여 본인의 주행 환경에 맞는 '저렴한 곳'을 찾는 것이 중요합니다.</p>
+            </div>
+        </section>
+
+        <!-- Interactive Calculator Section -->
+        <section class="content-section" id="calculator">
+            <div class="container calc-form">
+                <h2>벨로스터 유지비 예상 계산기 (2026년 기준)</h2>
+                <p>나이와 운전 경력을 입력하고, 본인의 주행 습관에 맞는 정보를 넣어 예상 유지비 '금액'을 확인해보세요. 이 견적은 '예상' 수치이며 정확한 값은 보험사별 '비교 견적'을 통해 확인 가능합니다.</p>
+                <form id="insuranceCalcForm" onsubmit="return false;">
+                    <label for="carModel">벨로스터 모델 선택</label>
+                    <select id="carModel" name="carModel">
+                        <option value="turbo">벨로스터 1.6 터보</option>
+                        <option value="n">벨로스터 N (2.0)</option>
+                    </select>
+                    <label for="age">운전자 나이 (만 나이)</label>
+                    <input type="number" id="age" name="age" min="18" max="100" placeholder="예: 30" required>
+
+                    <label for="experience">운전 경력 (년)</label>
+                    <input type="number" id="experience" name="experience" min="0" max="50" placeholder="예: 5" required>
+
+                    <label for="mileage">연간 주행 거리 (km)</label>
+                    <input type="number" id="mileage" name="mileage" min="0" placeholder="예: 15000" required>
+
+                    <label for="accidentHistory">최근 3년 내 사고 이력 (유/무)</label>
+                    <select id="accidentHistory" name="accidentHistory">
+                        <option value="none">없음</option>
+                        <option value="minor">경미한 사고 1회</option>
+                        <option value="major">사고 2회 이상</option>
+                    </select>
+
+                    <button type="submit" class="cta-btn" onclick="calculateInsurance()">예상 유지비 계산하기</button>
+                    <p id="calcResult" class="calc-result"></p>
+                </form>
+            </div>
+        </section>
+
+        <!-- Keyword Section -->
+        <section class="content-section">
+            <div class="container">
+                <h2>함께 많이 찾는 키워드 (AI 추천)</h2>
+                <ul class="keyword-list">
+                    <li>#벨로스터유지비</li>
+                    <li>#벨로스터N유지비</li>
+                    <li>#벨로스터보험료</li>
+                    <li>#벨로스터수리비</li>
+                    <li>#벨로스터연비</li>
+                    <li>#벨로스터장단점</li>
+                    <li>#벨로스터가격</li>
+                    <li>#벨로스터N단점</li>
+                    <li>#벨로스터터보비교</li>
+                    <li>#벨로스터유지비절약팁</li>
+                    <li>#자동차보험료비교</li>
+                    <li>#저렴한자동차보험</li>
+                    <li>#벨로스터내돈내산후기</li>
+                    <li>#벨로스터중고차유지비</li>
+                    <li>#벨로스터튜닝보험료</li>
+                    <li>#벨로스터N출고후기</li>
+                    <li>#2026자동차세금</li>
+                    <li>#자동차보험추천</li>
+                    <li>#벨로스터디시후기</li>
+                    <li>#자동차보험할인혜택</li>
+                    <li>#벨로스터견적비교</li>
+                    <li>#AI보험비교</li>
+                    <li>#제미나이자동차보험</li>
+                    <li>#ChatGPT보험료분석</li>
+                    <li>#벨로스터신규가입</li>
+                    <li>#벨로스터사고이력</li>
+                    <li>#벨로스터타이어교체비용</li>
+                    <li>#벨로스터N배기음</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="content-section">
+            <div class="container">
+                <h2>자주 묻는 질문 (FAQ)</h2>
+
+                <div class="faq-item">
+                    <h3>벨로스터 N 유지비가 일반 모델보다 비싼 이유가 무엇인가요?</h3>
+                    <p>벨로스터 N은 고성능 모델 특성상 일반 모델에 비해 부품 가격이 높고, 엔진 오일 교환 주기나 타이어 교체 비용 등 소모품 비용이 더 많이 발생합니다. 특히, 2026년 기준으로 고성능 차량에 대한 보험료 할증도 더 엄격해져 보험료 견적 또한 높게 산정될 수 있습니다.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>벨로스터 자동차세는 연간 얼마 정도 예상해야 하나요?</h3>
+                    <p>벨로스터 자동차세는 배기량(CC)을 기준으로 계산됩니다. 예를 들어 벨로스터 1.6 터보 모델(1,591cc)의 경우 연간 약 29만원대(지방교육세 포함)가 예상됩니다. 정확한 금액은 연식에 따라 달라지므로, 매년 6월과 12월에 부과되는 금액을 확인해야 합니다.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>벨로스터 유지비를 절약할 수 있는 방법이 있나요?</h3>
+                    <p>네, 여러 가지 방법이 있습니다. 첫째, 자동차 보험을 가입할 때 보험료 비교 사이트나 앱을 통해 여러 보험사의 견적을 확인하고 할인 혜택(주행거리 할인, 안전장치 할인 등)을 최대한 적용받는 것이 중요합니다. 둘째, 연비 효율을 높이는 운전 습관(급가속/급제동 피하기)을 들이고, 사설 정비소를 이용해 수리비를 절감할 수 있습니다. 셋째, 정기적으로 타이어 공기압을 체크하고 엔진 오일을 제때 교환하면 불필요한 고장을 예방할 수 있습니다.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>벨로스터 보험료를 저렴하게 가입하려면 어떻게 해야 하나요?</h3>
+                    <p>보험료를 절감하려면 주행거리 할인 특약(마일리지 할인)을 반드시 확인해야 합니다. 또한, 블랙박스나 첨단 안전장치 장착 여부에 따른 할인 혜택을 제공하는 보험사가 많습니다. 신규 가입 시 여러 보험사를 비교하여 나에게 맞는 가장 저렴한 곳을 선택하는 것이 핵심입니다. 2026년에는 TMAP 안전운전 점수나 AI 기반 할인도 가능해졌습니다.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>벨로스터 N 모델의 '장점'과 '단점'은 무엇인가요?</h3>
+                    <p><strong>장점:</strong> 뛰어난 주행 성능, 독특한 디자인, 스포츠카의 감성, 고성능 파츠의 내구성. <strong>단점:</strong> 일반 모델 대비 높은 유지비(수리비, 보험료, 유류비), 단종으로 인한 중고차 가격 방어의 어려움, 일반 승용차 대비 불편한 승차감 등이 있습니다. '내돈내산' 후기를 참고하여 결정하는 것이 좋습니다.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Image Gallery/Features Section -->
+        <section class="content-section">
+            <div class="container">
+                <h2>벨로스터 주요 특징 및 유지관리 정보</h2>
+                <div class="feature-grid">
+                    <div class="item">
+                        <img src="https://images.pexels.com/photos/9671616/pexels-photo-9671616.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="벨로스터 차량 이미지">
+                        <h3>개성 있는 디자인</h3>
+                        <p>1+2도어의 독특한 비대칭 디자인으로 시선을 사로잡습니다. 운전석은 쿠페의 감성을, 조수석은 실용성을 제공합니다.</p>
+                    </div>
+                    <div class="item">
+                        <img src="https://images.pexels.com/photos/10185122/pexels-photo-10185122.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="자동차 정비 이미지">
+                        <h3>정기적인 소모품 관리</h3>
+                        <p>엔진 오일, 브레이크 패드, 타이어 등 소모품 교체 주기를 철저히 지켜야 합니다. 특히 고성능 N 모델은 더 세심한 관리가 필요합니다.</p>
+                    </div>
+                    <div class="item">
+                        <img src="https://images.pexels.com/photos/1792484/pexels-photo-1792484.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="고속도로 주행 이미지">
+                        <h3>주행거리 연비 관리</h3>
+                        <p>효율적인 연비 관리를 위해 불필요한 공회전을 줄이고, 급가속/급제동을 피하며 정속 주행하는 습관을 들이세요.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- External Links Section -->
+        <section class="content-section">
+            <div class="container">
+                <h2>신뢰할 수 있는 외부 자료 및 참고 링크</h2>
+                <p>벨로스터 유지비 및 자동차 관련 정보를 확인하는 데 도움이 되는 공신력 있는 외부 자료입니다. 정확한 최신 정보를 위해 정부 기관 및 관련 산업 데이터를 참고하세요.</p>
+                <ul>
+                    <li><a href="https://www.car.go.kr/index.jsp" target="_blank" rel="noopener">자동차민원 대국민포털 (자동차세 등 공식 정보)</a></li>
+                    <li><a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9%2F%EC%9E%90%EB%8F%99%EC%B0%A8%EA%B4%80%EB%A6%AC%EB%B2%95" target="_blank" rel="noopener">법제처 - 자동차관리법 (정비, 안전 기준 관련 법규)</a></li>
+                    <li><a href="https://www.kidi.or.kr/" target="_blank" rel="noopener">보험개발원 (차량모델별 보험료 등급 정보)</a></li>
+                    <li><a href="https://www.sbiz.or.kr/sbiz/main.do" target="_blank" rel="noopener">소상공인시장진흥공단 (자동차 정비업체 관련)</a></li>
+                    <li><a href="https://ko.wikipedia.org/wiki/%ED%98%84%EB%8C%80_%EB%B2%A8%EB%A1%9C%EC%8A%A4%ED%84%B0" target="_blank" rel="noopener">현대 벨로스터 - 위키백과</a></li>
+                    <li><a href="https://www.youtube.com/@HyundaiN_Worldwide" target="_blank" rel="noopener">현대 N 브랜드 공식 유튜브 채널</a></li>
+                </ul>
+            </div>
+        </section>
+
     </main>
-  </body>
-</html>
+
+    <!-- JavaScript for calculation and FAQ toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // FAQ 토글 기능
+            document.querySelectorAll('.faq-item h3').forEach(item => {
+                item.addEventListener('click', event => {
+                    const parent = item.parentElement;
+                    parent.classList.toggle('active');
+                });
+            });
+        });
+
+        function calculateInsurance() {
+            const carModel = document.getElementById('carModel').value;
+            const age = parseInt(document.getElementById('age').value);
+            const experience = parseInt(document.getElementById('experience').value);
+            const mileage = parseInt(document.getElementById('mileage').value);
+            const accidentHistory = document.getElementById('accidentHistory').value;
+
+            // 기본 유지비 산정 (N 모델 vs 터보 모델)
+            let baseInsuranceCost = carModel === 'n' ? 1000000 : 800000; // 기본 보험료 기준
+            let baseTaxCost = carModel === 'n' ? 519000 : 293000; // 기본 세금 기준
+            let fuelEfficiency = carModel === 'n' ? 10.7 : 12.6; // 연비 (km/l)
+            let fuelPricePerLiter = 1800; // 2026년 예상 유가
+
+            // 1. 보험료 조정 (운전자 나이, 경력)
+            if (age < 26) {
+                baseInsuranceCost += 500000; // 20대 초반 할증
+            } else if (age < 30) {
+                baseInsuranceCost += 200000; // 20대 후반 할증
+            }
+            if (experience < 3) {
+                baseInsuranceCost += 300000; // 초보 운전 할증
+            } else if (experience < 5) {
+                baseInsuranceCost += 100000;
+            }
+
+            // 2. 사고 이력 조정
+            if (accidentHistory === 'minor') {
+                baseInsuranceCost += 200000;
+            } else if (accidentHistory === 'major') {
+                baseInsuranceCost += 400000;
+            }
+
+            // 3. 연간 주유비 계산
+            let totalFuelCost = (mileage / fuelEfficiency) * fuelPricePerLiter;
+
+            // 4. 연간 유지비 합산
+            let totalAnnualCost = baseInsuranceCost + baseTaxCost + totalFuelCost;
+
+            // 결과 표시
+            const resultElement = document.getElementById('calcResult');
+            resultElement.innerHTML = `
+                <p><strong>예상 연간 유지비:</strong> ${totalAnnualCost.toLocaleString()}원</p>
+                <ul>
+                    <li>(예상 보험료: ${baseInsuranceCost.toLocaleString()}원)</li>
+                    <li>(자동차세: ${baseTaxCost.toLocaleString()}원)</li>
+                    <li>(연간 주유비: ${totalFuelCost.toLocaleString()}원)</li>
+                </ul>
+                <p><em>*수리비 및 소모품 비용은 포함되지 않은 금액입니다. 정확한 견적은 보험사 비교를 통해 확인하세요.</em></p>
+            `;
+        }
+    </script>
+  
